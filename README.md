@@ -115,11 +115,11 @@ Open the URL shown in your terminal (e.g., [http://localhost:3000](http://localh
 
 ### Environment Variables
 
-Create a `.env.local` file in the root directory:
+The setup script will automatically create a `.env.local` file for you. If you need to create it manually:
 
 ```env
 # GitHub Models Configuration (Required)
-GITHUB_TOKEN=ghp_your_github_token_here
+GITHUB_TOKEN=your_github_token_here
 
 # App Configuration
 NEXT_PUBLIC_APP_URL=http://localhost:3000

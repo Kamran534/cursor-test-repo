@@ -15,12 +15,15 @@ import {
   Zap,
   ArrowLeft,
   Save,
-  Trash2
+  Trash2,
+  BookOpen
 } from 'lucide-react';
 import Link from 'next/link';
 import { exercises, getExercisesByCategory, getExercisesByDifficulty } from '../data/exercises';
-import { Exercise, WorkoutExercise, WorkoutSet } from '../types';
-import AIChat from '../components/AIChat';
+import { Exercise, WorkoutExercise, WorkoutSet, Workout } from '../types';
+
+import WorkoutTemplates from '../components/WorkoutTemplates';
+import { useLocalStorage } from '../utils/localStorage';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
 
@@ -49,6 +52,8 @@ export default function WorkoutPage() {
   const [currentSet, setCurrentSet] = useState(1);
   const [restTimer, setRestTimer] = useState(0);
   const [isResting, setIsResting] = useState(false);
+  const [showTemplates, setShowTemplates] = useState(false);
+  const localStorage = useLocalStorage();
 
   useEffect(() => {
     let filtered = exercises;
@@ -136,13 +141,53 @@ export default function WorkoutPage() {
         setCurrentSet(1);
         toast.success('Exercise complete! Moving to next exercise 🎯');
       } else {
-        // Workout complete
+        // Workout complete - save to history
+        const workoutData = {
+          id: uuidv4(),
+          date: new Date(),
+          workoutId: uuidv4(),
+          exercises: currentWorkout.map(we => ({
+            exerciseId: we.exercise.id,
+            sets: we.sets,
+            personalRecord: false
+          })),
+          duration: 0, // Would calculate actual duration in real app
+          notes: 'Completed workout'
+        };
+        localStorage.addToHistory(workoutData);
+        
         setIsWorkoutMode(false);
         setCurrentExerciseIndex(0);
         setCurrentSet(1);
         toast.success('🎉 Workout Complete! Great job! 🎉');
       }
     }
+  };
+
+  const handleSelectTemplate = (workout: Workout) => {
+    setCurrentWorkout(workout.exercises);
+    setShowTemplates(false);
+    toast.success(`${workout.name} loaded! Ready to start!`);
+  };
+
+  const saveCurrentWorkout = () => {
+    if (currentWorkout.length === 0) {
+      toast.error('No exercises to save!');
+      return;
+    }
+    
+    const workout: Workout = {
+      id: uuidv4(),
+      name: `Custom Workout ${new Date().toLocaleDateString()}`,
+      description: 'Custom workout created by user',
+      exercises: currentWorkout,
+      difficulty: 'intermediate',
+      category: 'Custom',
+      createdAt: new Date()
+    };
+    
+    localStorage.saveWorkout(workout);
+    toast.success('Workout saved successfully!');
   };
 
   const formatTime = (seconds: number) => {
@@ -260,7 +305,7 @@ export default function WorkoutPage() {
             </div>
           </motion.div>
         </div>
-        <AIChat />
+
       </div>
     );
   }
@@ -280,19 +325,47 @@ export default function WorkoutPage() {
           </Link>
           <h1 className="text-4xl font-bold">Workout Planner</h1>
           <div className="flex items-center space-x-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowTemplates(!showTemplates)}
+              className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-2 rounded-full font-semibold flex items-center space-x-2"
+            >
+              <BookOpen className="h-4 w-4" />
+              <span>Templates</span>
+            </motion.button>
             {currentWorkout.length > 0 && (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={startWorkout}
-                className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-2 rounded-full font-semibold flex items-center space-x-2"
-              >
-                <Play className="h-4 w-4" />
-                <span>Start Workout</span>
-              </motion.button>
+              <>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={saveCurrentWorkout}
+                  className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-6 py-2 rounded-full font-semibold flex items-center space-x-2"
+                >
+                  <Save className="h-4 w-4" />
+                  <span>Save</span>
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={startWorkout}
+                  className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-2 rounded-full font-semibold flex items-center space-x-2"
+                >
+                  <Play className="h-4 w-4" />
+                  <span>Start Workout</span>
+                </motion.button>
+              </>
             )}
           </div>
         </motion.div>
+
+        {/* Workout Templates */}
+        {showTemplates && (
+          <WorkoutTemplates 
+            onSelectWorkout={handleSelectTemplate}
+            className="mb-8"
+          />
+        )}
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Exercise Browser */}
@@ -559,7 +632,7 @@ export default function WorkoutPage() {
           )}
         </AnimatePresence>
       </div>
-      <AIChat />
+
     </div>
   );
 }

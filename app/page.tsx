@@ -12,7 +12,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import Link from 'next/link';
-import AIChat from './components/AIChat';
+
 
 const features = [
   {
@@ -75,13 +75,18 @@ export default function Home() {
             <Link href="/progress" className="text-gray-300 hover:text-white transition-colors">
               Progress
             </Link>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
-            >
-              Get Started
-            </motion.button>
+            <Link href="/chat" className="text-gray-300 hover:text-white transition-colors">
+              AI Trainer
+            </Link>
+            <Link href="/workout">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+              >
+                Get Started
+              </motion.button>
+            </Link>
           </div>
         </nav>
       </motion.header>
@@ -130,13 +135,16 @@ export default function Home() {
                 </motion.button>
               </Link>
               
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="border-2 border-gray-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:border-white transition-all"
-              >
-                Watch Demo
-              </motion.button>
+              <Link href="/chat">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="border-2 border-gray-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:border-white transition-all flex items-center space-x-2"
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  <span>Try AI Trainer</span>
+                </motion.button>
+              </Link>
             </motion.div>
           </div>
         </div>
@@ -261,23 +269,39 @@ export default function Home() {
             <p className="text-xl text-gray-300 mb-8">
               Join thousands who have already started their AI-powered fitness journey
             </p>
-            <Link href="/workout">
-              <motion.button
-                whileHover={{ 
-                  scale: 1.05, 
-                  boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)" 
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-12 py-6 rounded-full font-bold text-xl shadow-2xl hover:shadow-3xl transition-all flex items-center space-x-3 mx-auto"
-              >
-                <span>Begin Your Journey</span>
-                <ArrowRight className="h-6 w-6" />
-              </motion.button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link href="/workout">
+                <motion.button
+                  whileHover={{ 
+                    scale: 1.05, 
+                    boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)" 
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-12 py-6 rounded-full font-bold text-xl shadow-2xl hover:shadow-3xl transition-all flex items-center space-x-3"
+                >
+                  <span>Begin Your Journey</span>
+                  <ArrowRight className="h-6 w-6" />
+                </motion.button>
+              </Link>
+              
+              <Link href="/chat">
+                <motion.button
+                  whileHover={{ 
+                    scale: 1.05, 
+                    boxShadow: "0 20px 40px rgba(139, 92, 246, 0.4)" 
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-12 py-6 rounded-full font-bold text-xl shadow-2xl hover:shadow-3xl transition-all flex items-center space-x-3"
+                >
+                  <MessageCircle className="h-6 w-6" />
+                  <span>Chat with AI</span>
+                </motion.button>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
-      <AIChat />
+
     </div>
   );
 }

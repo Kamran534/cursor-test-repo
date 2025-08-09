@@ -251,6 +251,370 @@ export const exercises: Exercise[] = [
       'Do push-up, jump feet back to squat, then jump up'
     ],
     muscleGroups: ['full body']
+  },
+
+  // Additional Chest Exercises
+  {
+    id: 'incline-dumbbell-press',
+    name: 'Incline Dumbbell Press',
+    category: 'chest',
+    equipment: ['dumbbells', 'incline bench'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Set bench to 45-degree incline',
+      'Hold dumbbells at chest level',
+      'Press weights up and together',
+      'Lower with control to starting position'
+    ],
+    muscleGroups: ['upper chest', 'shoulders', 'triceps']
+  },
+  {
+    id: 'dips',
+    name: 'Dips',
+    category: 'chest',
+    equipment: ['dip bars', 'bodyweight'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Grip dip bars with arms straight',
+      'Lower body by bending arms',
+      'Keep torso upright and lean slightly forward',
+      'Push back up to starting position'
+    ],
+    muscleGroups: ['chest', 'triceps', 'shoulders']
+  },
+  {
+    id: 'cable-crossover',
+    name: 'Cable Crossover',
+    category: 'chest',
+    equipment: ['cable machine'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Set cables to high position',
+      'Stand in center with slight forward lean',
+      'Bring handles together in front of chest',
+      'Return to starting position with control'
+    ],
+    muscleGroups: ['chest', 'shoulders']
+  },
+
+  // Additional Back Exercises
+  {
+    id: 'deadlift-rows',
+    name: 'T-Bar Row',
+    category: 'back',
+    equipment: ['t-bar', 'weight plates'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Straddle T-bar with feet shoulder-width apart',
+      'Bend at hips and knees, keep back straight',
+      'Pull bar to chest, squeeze shoulder blades',
+      'Lower with control'
+    ],
+    muscleGroups: ['lats', 'rhomboids', 'rear delts', 'biceps']
+  },
+  {
+    id: 'chin-ups',
+    name: 'Chin-ups',
+    category: 'back',
+    equipment: ['pull-up bar'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Hang from bar with palms facing you',
+      'Pull body up until chin clears bar',
+      'Lower with control to starting position',
+      'Keep core engaged throughout'
+    ],
+    muscleGroups: ['lats', 'rhomboids', 'biceps']
+  },
+  {
+    id: 'cable-rows',
+    name: 'Seated Cable Row',
+    category: 'back',
+    equipment: ['cable machine'],
+    difficulty: 'beginner',
+    instructions: [
+      'Sit with feet on platform, knees slightly bent',
+      'Grab handle with both hands',
+      'Pull handle to lower chest',
+      'Squeeze shoulder blades together'
+    ],
+    muscleGroups: ['lats', 'rhomboids', 'rear delts', 'biceps']
+  },
+
+  // Additional Leg Exercises
+  {
+    id: 'bulgarian-split-squat',
+    name: 'Bulgarian Split Squat',
+    category: 'legs',
+    equipment: ['bench', 'bodyweight'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Stand 2-3 feet in front of bench',
+      'Place top of rear foot on bench',
+      'Lower into lunge position',
+      'Push through front heel to return'
+    ],
+    muscleGroups: ['quadriceps', 'glutes', 'hamstrings']
+  },
+  {
+    id: 'romanian-deadlift',
+    name: 'Romanian Deadlift',
+    category: 'legs',
+    equipment: ['barbell'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Hold barbell with shoulder-width grip',
+      'Keep knees slightly bent',
+      'Hinge at hips, lower bar along legs',
+      'Drive hips forward to return to standing'
+    ],
+    muscleGroups: ['hamstrings', 'glutes', 'erector spinae']
+  },
+  {
+    id: 'leg-press',
+    name: 'Leg Press',
+    category: 'legs',
+    equipment: ['leg press machine'],
+    difficulty: 'beginner',
+    instructions: [
+      'Sit in leg press machine',
+      'Place feet shoulder-width apart on platform',
+      'Lower weight by bending knees',
+      'Press weight back up through heels'
+    ],
+    muscleGroups: ['quadriceps', 'glutes', 'hamstrings']
+  },
+  {
+    id: 'calf-raises',
+    name: 'Calf Raises',
+    category: 'legs',
+    equipment: ['bodyweight'],
+    difficulty: 'beginner',
+    instructions: [
+      'Stand with feet hip-width apart',
+      'Rise up onto toes as high as possible',
+      'Hold briefly at the top',
+      'Lower slowly to starting position'
+    ],
+    muscleGroups: ['calves']
+  },
+
+  // Additional Shoulder Exercises
+  {
+    id: 'arnold-press',
+    name: 'Arnold Press',
+    category: 'shoulders',
+    equipment: ['dumbbells'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Start with dumbbells at shoulder level, palms facing you',
+      'Rotate wrists as you press up',
+      'End with palms facing forward at top',
+      'Reverse the motion on the way down'
+    ],
+    muscleGroups: ['shoulders', 'triceps']
+  },
+  {
+    id: 'face-pulls',
+    name: 'Face Pulls',
+    category: 'shoulders',
+    equipment: ['cable machine'],
+    difficulty: 'beginner',
+    instructions: [
+      'Set cable to face height with rope attachment',
+      'Pull rope towards face',
+      'Separate hands at face level',
+      'Focus on squeezing shoulder blades'
+    ],
+    muscleGroups: ['rear delts', 'rhomboids']
+  },
+  {
+    id: 'upright-rows',
+    name: 'Upright Rows',
+    category: 'shoulders',
+    equipment: ['barbell'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Hold barbell with narrow grip',
+      'Pull bar straight up to chest level',
+      'Keep elbows higher than wrists',
+      'Lower with control'
+    ],
+    muscleGroups: ['shoulders', 'traps']
+  },
+
+  // Additional Arm Exercises
+  {
+    id: 'hammer-curls',
+    name: 'Hammer Curls',
+    category: 'arms',
+    equipment: ['dumbbells'],
+    difficulty: 'beginner',
+    instructions: [
+      'Hold dumbbells with neutral grip',
+      'Keep elbows at sides',
+      'Curl weights toward shoulders',
+      'Lower with control'
+    ],
+    muscleGroups: ['biceps', 'forearms']
+  },
+  {
+    id: 'overhead-tricep-extension',
+    name: 'Overhead Tricep Extension',
+    category: 'arms',
+    equipment: ['dumbbell'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Hold dumbbell overhead with both hands',
+      'Lower weight behind head by bending elbows',
+      'Keep upper arms stationary',
+      'Extend arms back to starting position'
+    ],
+    muscleGroups: ['triceps']
+  },
+  {
+    id: 'preacher-curls',
+    name: 'Preacher Curls',
+    category: 'arms',
+    equipment: ['barbell', 'preacher bench'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Sit at preacher bench with arms extended',
+      'Hold barbell with underhand grip',
+      'Curl weight up focusing on biceps',
+      'Lower slowly to starting position'
+    ],
+    muscleGroups: ['biceps']
+  },
+  {
+    id: 'cable-tricep-pushdown',
+    name: 'Cable Tricep Pushdown',
+    category: 'arms',
+    equipment: ['cable machine'],
+    difficulty: 'beginner',
+    instructions: [
+      'Stand at cable machine with rope or bar attachment',
+      'Keep elbows at sides',
+      'Push weight down by extending forearms',
+      'Return to starting position with control'
+    ],
+    muscleGroups: ['triceps']
+  },
+
+  // Additional Core Exercises
+  {
+    id: 'russian-twists',
+    name: 'Russian Twists',
+    category: 'core',
+    equipment: ['bodyweight'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Sit with knees bent, feet slightly off ground',
+      'Lean back slightly, keep back straight',
+      'Rotate torso side to side',
+      'Keep core engaged throughout'
+    ],
+    muscleGroups: ['obliques', 'abs']
+  },
+  {
+    id: 'mountain-climbers',
+    name: 'Mountain Climbers',
+    category: 'core',
+    equipment: ['bodyweight'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Start in plank position',
+      'Bring one knee toward chest',
+      'Quickly switch legs',
+      'Maintain plank position throughout'
+    ],
+    muscleGroups: ['core', 'shoulders', 'legs']
+  },
+  {
+    id: 'dead-bug',
+    name: 'Dead Bug',
+    category: 'core',
+    equipment: ['bodyweight'],
+    difficulty: 'beginner',
+    instructions: [
+      'Lie on back with arms extended up',
+      'Bring knees to 90 degrees',
+      'Lower opposite arm and leg slowly',
+      'Return to starting position'
+    ],
+    muscleGroups: ['core', 'hip flexors']
+  },
+  {
+    id: 'bicycle-crunches',
+    name: 'Bicycle Crunches',
+    category: 'core',
+    equipment: ['bodyweight'],
+    difficulty: 'beginner',
+    instructions: [
+      'Lie on back with hands behind head',
+      'Bring knees to 90 degrees',
+      'Bring elbow to opposite knee',
+      'Alternate sides in cycling motion'
+    ],
+    muscleGroups: ['abs', 'obliques']
+  },
+
+  // Additional Cardio Exercises
+  {
+    id: 'high-knees',
+    name: 'High Knees',
+    category: 'cardio',
+    equipment: ['bodyweight'],
+    difficulty: 'beginner',
+    instructions: [
+      'Stand with feet hip-width apart',
+      'Run in place lifting knees high',
+      'Pump arms naturally',
+      'Maintain quick pace'
+    ],
+    muscleGroups: ['legs', 'core']
+  },
+  {
+    id: 'jump-rope',
+    name: 'Jump Rope',
+    category: 'cardio',
+    equipment: ['jump rope'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Hold rope handles at hip level',
+      'Jump with both feet together',
+      'Land softly on balls of feet',
+      'Keep elbows close to body'
+    ],
+    muscleGroups: ['legs', 'shoulders', 'core']
+  },
+  {
+    id: 'box-jumps',
+    name: 'Box Jumps',
+    category: 'cardio',
+    equipment: ['plyometric box'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Stand in front of box',
+      'Jump explosively onto box',
+      'Land softly with both feet',
+      'Step down carefully'
+    ],
+    muscleGroups: ['legs', 'glutes', 'core']
+  },
+  {
+    id: 'bear-crawl',
+    name: 'Bear Crawl',
+    category: 'cardio',
+    equipment: ['bodyweight'],
+    difficulty: 'intermediate',
+    instructions: [
+      'Start on hands and feet, knees off ground',
+      'Crawl forward moving opposite hand and foot',
+      'Keep core tight and hips low',
+      'Maintain steady rhythm'
+    ],
+    muscleGroups: ['full body']
   }
 ];
 

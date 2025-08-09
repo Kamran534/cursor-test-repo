@@ -18,8 +18,9 @@ import {
   LineChart
 } from 'lucide-react';
 import Link from 'next/link';
-import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar, PieChart as RechartsPieChart, Cell } from 'recharts';
-import AIChat from '../components/AIChat';
+import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar, PieChart as RechartsPieChart, Pie, Cell } from 'recharts';
+
+import { useLocalStorage } from '../utils/localStorage';
 
 // Mock data for demonstrations
 const workoutData = [
@@ -63,17 +64,31 @@ const stats = [
   { label: 'Current Streak', value: '7 days', change: '+3 days', icon: Zap, color: 'from-purple-500 to-pink-500' },
 ];
 
+// Function to get dynamic stats
+const getDynamicStats = (userStats: any) => [
+  { label: 'Total Workouts', value: userStats.totalWorkouts.toString(), change: '+12%', icon: Activity, color: 'from-blue-500 to-cyan-500' },
+  { label: 'Total Hours', value: userStats.totalDuration.toString(), change: '+8%', icon: Clock, color: 'from-green-500 to-emerald-500' },
+  { label: 'Calories Burned', value: '12.5K', change: '+15%', icon: Flame, color: 'from-red-500 to-orange-500' },
+  { label: 'Current Streak', value: `${userStats.currentStreak} days`, change: '+3 days', icon: Zap, color: 'from-purple-500 to-pink-500' },
+];
+
 export default function ProgressPage() {
   const [selectedChart, setSelectedChart] = useState('workout');
   const [selectedPeriod, setSelectedPeriod] = useState('week');
   const [animatedStats, setAnimatedStats] = useState(stats.map(() => 0));
+  const localStorage = useLocalStorage();
+  const userStats = localStorage.getStats();
+  const workoutHistory = localStorage.getHistory();
 
   useEffect(() => {
+    // Use dynamic stats based on user data
+    const dynamicStats = getDynamicStats(userStats);
+    
     // Animate stats numbers
-    const intervals = stats.map((stat, index) => {
+    const intervals = dynamicStats.map((stat, index) => {
       const targetValue = parseInt(stat.value.replace(/[^\d]/g, ''));
       let currentValue = 0;
-      const increment = targetValue / 50;
+      const increment = Math.max(1, targetValue / 50);
       
       return setInterval(() => {
         currentValue += increment;
@@ -90,7 +105,7 @@ export default function ProgressPage() {
     });
 
     return () => intervals.forEach(clearInterval);
-  }, []);
+  }, [userStats]);
 
   const chartVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -125,7 +140,7 @@ export default function ProgressPage() {
 
         {/* Stats Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, index) => (
+          {getDynamicStats(userStats).map((stat, index) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 50 }}
@@ -276,11 +291,19 @@ export default function ProgressPage() {
                           borderRadius: '8px'
                         }}
                       />
-                      <RechartsPieChart data={muscleGroupData} cx="50%" cy="50%" outerRadius={120}>
+                      <Pie 
+                        data={muscleGroupData} 
+                        cx="50%" 
+                        cy="50%" 
+                        outerRadius={120}
+                        dataKey="value"
+                        label={({ name, percent }) => `${name} ${percent ? (percent * 100).toFixed(0) : 0}%`}
+                        labelLine={false}
+                      >
                         {muscleGroupData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
-                      </RechartsPieChart>
+                      </Pie>
                     </RechartsPieChart>
                   </ResponsiveContainer>
                 )}
@@ -296,14 +319,9 @@ export default function ProgressPage() {
             >
               <h3 className="text-xl font-bold mb-4">Recent Workouts</h3>
               <div className="space-y-3">
-                {[
-                  { date: 'Today', workout: 'Upper Body Strength', duration: '45 min', calories: 320 },
-                  { date: 'Yesterday', workout: 'Cardio HIIT', duration: '30 min', calories: 280 },
-                  { date: '2 days ago', workout: 'Lower Body Power', duration: '50 min', calories: 380 },
-                  { date: '3 days ago', workout: 'Core & Flexibility', duration: '25 min', calories: 180 },
-                ].map((activity, index) => (
+                {workoutHistory.length > 0 ? workoutHistory.slice(-4).reverse().map((activity, index) => (
                   <motion.div
-                    key={index}
+                    key={activity.id}
                     initial={{ x: -50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.5 + index * 0.1 }}
@@ -311,15 +329,20 @@ export default function ProgressPage() {
                     className="flex items-center justify-between p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-all cursor-pointer"
                   >
                     <div>
-                      <h4 className="font-semibold">{activity.workout}</h4>
-                      <p className="text-sm text-gray-400">{activity.date}</p>
+                      <h4 className="font-semibold">Workout #{workoutHistory.length - index}</h4>
+                      <p className="text-sm text-gray-400">{activity.date.toLocaleDateString()}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-blue-400">{activity.duration}</p>
-                      <p className="text-xs text-gray-500">{activity.calories} cal</p>
+                      <p className="text-sm text-blue-400">{activity.exercises.length} exercises</p>
+                      <p className="text-xs text-gray-500">{activity.duration || 0} min</p>
                     </div>
                   </motion.div>
-                ))}
+                )) : (
+                  <div className="text-center py-8">
+                    <p className="text-gray-400">No workouts completed yet</p>
+                    <p className="text-sm text-gray-500 mt-1">Start working out to see your progress!</p>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>
@@ -428,7 +451,7 @@ export default function ProgressPage() {
           </div>
         </div>
       </div>
-      <AIChat />
+
     </div>
   );
 }
